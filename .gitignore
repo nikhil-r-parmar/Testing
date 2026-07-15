@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.env
+venv/
+.venv/
+media/uploads/*
+media/output/*
+!media/uploads/.gitkeep
+!media/output/.gitkeep
+staticfiles/

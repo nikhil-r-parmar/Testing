@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Result | AI Vocal Separator{% endblock %}
+
+{% block content %}
+<section class="result-section">
+    <div class="container">
+        <div class="card result-card">
+            <div class="result-header">
+                <p class="eyebrow">Processing result</p>
+                <h1>{{ result.original_name }}</h1>
+            </div>
+
+            <div class="message-box {% if result.success %}success-box{% else %}error-box{% endif %}">
+                {{ result.message }}
+            </div>
+
+            {% if result.success %}
+                <div class="preview-grid">
+                    <div class="audio-panel">
+                        <h2>Vocals</h2>
+                        <audio controls preload="none">
+                            <source src="/{{ result.vocals_relative_path }}">
+                            Your browser does not support audio preview.
+                        </audio>
+                        <a class="btn btn-secondary" href="/{{ result.vocals_relative_path }}" download>Download Vocals</a>
+                    </div>
+
+                    <div class="audio-panel">
+                        <h2>Instrumental</h2>
+                        <audio controls preload="none">
+                            <source src="/{{ result.instrumental_relative_path }}">
+                            Your browser does not support audio preview.
+                        </audio>
+                        <a class="btn btn-secondary" href="/{{ result.instrumental_relative_path }}" download>Download Instrumental</a>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="actions-row">
+                <a href="/" class="btn btn-primary">Try Another File</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

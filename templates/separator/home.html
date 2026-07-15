@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | AI Vocal Separator{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container">
+        <div class="card upload-card">
+            <div class="intro-block">
+                <p class="eyebrow">Beginner-friendly audio separation project</p>
+                <h1>Separate vocals and instrumental from one audio file</h1>
+                <p class="lead">
+                    Upload one MP3 or WAV file, run Demucs on CPU, and get two outputs you can preview and download.
+                </p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_audio_file">Audio file</label>
+                    {{ form.audio_file }}
+                    {% if form.audio_file.errors %}
+                        <div class="error-text">{{ form.audio_file.errors|striptags }}</div>
+                    {% endif %}
+                    <p class="help-text">Accepted formats: MP3 and WAV.</p>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">Separate Audio</button>
+
+                <div class="status-box" id="loadingBox" hidden>
+                    Processing audio on CPU. Please wait. Longer files may take time.
+                </div>
+            </form>
+
+            <div class="info-grid">
+                <div class="mini-card">
+                    <h2>What you get</h2>
+                    <p>Two simple outputs: vocals and instrumental.</p>
+                </div>
+                <div class="mini-card">
+                    <h2>Version 1</h2>
+                    <p>Made for local use, demos, and student learning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    const uploadForm = document.getElementById('uploadForm');
+    const loadingBox = document.getElementById('loadingBox');
+    const submitBtn = document.getElementById('submitBtn');
+
+    uploadForm.addEventListener('submit', function () {
+        loadingBox.hidden = false;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+    });
+</script>
+{% endblock %}
